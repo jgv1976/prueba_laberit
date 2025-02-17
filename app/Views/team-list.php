@@ -3,7 +3,7 @@
 <h1>Listado de equipos</h1>
 
 <div class="new_team text-end mb-4 mt-3">
-    <a href="equipo.php?action=create" class="btn btn-success d-inline-flex align-items-center">
+    <a href="equipos.php?action=create" class="btn btn-success d-inline-flex align-items-center">
         Añadir nuevo equipo
         <i class="fa-solid fa-plus ms-2"></i>
     </a>
@@ -16,6 +16,7 @@
             <th>Ciudad</th>
             <th>Deporte</th>
             <th>Fecha de fundacion</th>
+            <th>Jugadores</th>
             <th>Ficha</th>
         </tr>
     </thead>
@@ -26,9 +27,10 @@
                 <td><?php echo htmlspecialchars($team['city'] ?? 'N/A') ?></td>
                 <td><?php echo htmlspecialchars($team['sport']) ?></td>
                 <td><?php echo htmlspecialchars(date("d/m/Y", strtotime($team['founded_date']))) ?></td>
+                <td><?php echo $team['player_count']; ?></td>
                 <td>
                     <a href="ficha.php?id=<?php echo htmlspecialchars($team['id']); ?>" class="btn btn-primary btn-sm">
-                        Ver Ficha
+                        Ver Ficha y jugadores
                     </a>
                 </td>
             </tr>
