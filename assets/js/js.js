@@ -51,3 +51,101 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const addPlayerForm = document.querySelector("#addPlayerForm");
+
+    if (addPlayerForm) {
+        addPlayerForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Evitar el envío tradicional del formulario
+
+            let formData = new FormData(addPlayerForm);
+
+            fetch("control.php?action=add_player", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Recargar la página para actualizar la lista de jugadores
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Ocurrió un error al intentar guardar el jugador.");
+            });
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-player").forEach(button => {
+        button.addEventListener("click", function () {
+            let playerId = this.getAttribute("data-player-id");
+
+            if (!confirm("¿Estás seguro de que deseas eliminar este jugador?")) {
+                return;
+            }
+
+            fetch("control.php?action=delete_player", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "id=" + encodeURIComponent(playerId)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Recargar la página después de eliminar
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Ocurrió un error al intentar eliminar el jugador.");
+            });
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Abrir modal y cargar datos
+    document.querySelectorAll(".edit-player").forEach(button => {
+        button.addEventListener("click", function () {
+            document.querySelector("#edit-player-id").value = this.getAttribute("data-player-id");
+            document.querySelector("#edit-player-name").value = this.getAttribute("data-player-name");
+            document.querySelector("#edit-player-number").value = this.getAttribute("data-player-number");
+            document.querySelector("#edit-player-captain").checked = this.getAttribute("data-player-captain") === "1";
+
+            let modal = new bootstrap.Modal(document.querySelector("#editPlayerModal"));
+            modal.show();
+        });
+    });
+
+    // Enviar datos editados por AJAX
+    document.querySelector("#editPlayerForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let formData = new FormData(this);
+
+        fetch("control.php?action=edit_player", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // Recargar la página después de la actualización
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Ocurrió un error al intentar actualizar el jugador.");
+        });
+    });
+});

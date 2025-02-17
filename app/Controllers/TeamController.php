@@ -7,6 +7,9 @@ use App\Models\TeamModel;
 class TeamController {
     public function listTeams() {
         $teams = TeamModel::getAll();
+        foreach ($teams as &$team) {
+            $team['player_count'] = TeamModel::getPlayerCount($team['id']);
+        }
         include __DIR__ . '/../Views/team-list.php';
     }
 

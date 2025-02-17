@@ -1,9 +1,9 @@
-    </div> <!-- Cierra el card box -->
+    </div>
 </main>
 
 <footer class="bg-dark text-white text-center py-3 mt-4">
     <div class="container">
-        <p>&copy; <?php echo date("Y"); ?> Sports Clubs.</p>
+        <p>&copy; <?php echo date("Y"); ?> Gestión de clubes deportivos.</p>
     </div>
 </footer>
 

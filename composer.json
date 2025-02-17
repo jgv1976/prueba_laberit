@@ -1,0 +1,16 @@
+{
+    "name": "jgv19/gestion_clubes_deportivos",
+    "description": "Gestión de clubes deportivos",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jgv1976",
+            "email": "jgv1976@gmail.com"
+        }
+    ],
+    "require": {}
+}
